@@ -64,8 +64,12 @@ token_auth() {
 
 # Function to upload an attachment to a ServiceNow record
 upload_attachment() {
+  # https://www.servicenow.com/docs/bundle/xanadu-api-reference/page/integrate/inbound-rest/concept/c_AttachmentAPI.html#title_attachment-POST-file
+  local OPTIND=1
   # TODO: replace record_sys_id with change number, or, accept either into the primary function and fetch the sys_id like we do in other scripts
   # ? will we always already have the sys_id? possibly not?
+  # ! basename or realpath for file_path in upload command?
+  # will likely need to support encryption_context in future state
   local OPTIND=1
   local record_sys_id=""
   local file_path=""
