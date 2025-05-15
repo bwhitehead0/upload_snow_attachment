@@ -90,6 +90,7 @@ upload_attachment() {
     esac
   done
   
+  # ! may need to dynamically set the table_name based on the type of record, ie CHG*, INC*, etc
   api_URL="${sn_url}/${api_endpoint}?table_name=change_request&table_sys_id=${record_sys_id}&file_name=$(basename "$file_path")"
   
   response=$(curl -s -k --location -w "\n%{http_code}" -X POST -H "Authorization: Bearer ${bearer_token}" -H "Content-Type: multipart/form-data" -F "file=@${file_path}" "${api_URL}")
@@ -138,11 +139,13 @@ main() {
   export DEBUG
   export DEBUG_PASS
   
+  # TODO: update required param check to be more specific and provide meaningful error messages
   if [[ -z "$record_sys_id" || -z "$sn_url" || -z "$file_path" || ( -z "$username" && -z "$password" ) || ( -z "$username" && -z "$password" && -z "$client_id" && -z "$client_secret" ) ]]; then
     err "main(): Missing required parameters: record_sys_id, sn_url, file_path, and either Username and Password, or Username + Password + Client ID + Client Secret."
     exit 1
   fi
   
+  # ! may need to check if 'file' is installed if we end up needing to provide mime type for upload
   if ! check_application_installed jq; then
     err "jq not available, aborting."
     exit 1
