@@ -1,5 +1,5 @@
-name: upload_snow_file
-description: Upload File to ServiceNow
+name: upload_snow_attachment
+description: Upload Attachment to ServiceNow
 author: bwhitehead0
 inputs:
   snow_url:
@@ -34,15 +34,15 @@ inputs:
 outputs:
   response:
     description: The full JSON response from the ServiceNow API
-    value: ${{ steps.upload_snow_file.outputs.response }}
+    value: ${{ steps.upload_snow_attachment.outputs.response }}
 runs:
   using: composite
   steps:
-    - name: Upload File to ServiceNow
-      id: upload_snow_file
+    - name: Upload Attachment to ServiceNow
+      id: upload_snow_attachment
       shell: bash
       run: |
-        response=$(${{ github.action_path }}/assets/upload_snow_file.sh \
+        response=$(${{ github.action_path }}/assets/upload_snow_attachment.sh \
           -c "${{ inputs.snow_record_sys_id }}" \
           -l "${{ inputs.snow_url }}" \
           -u "${{ inputs.snow_user }}" \
