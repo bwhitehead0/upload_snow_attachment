@@ -43,7 +43,7 @@ runs:
       shell: bash
       run: |
         response=$(${{ github.action_path }}/assets/upload_snow_attachment.sh \
-          -c "${{ inputs.snow_record_sys_id }}" \
+          -r "${{ inputs.snow_record_sys_id }}" \
           -l "${{ inputs.snow_url }}" \
           -u "${{ inputs.snow_user }}" \
           -p "${{ inputs.snow_password }}" \
